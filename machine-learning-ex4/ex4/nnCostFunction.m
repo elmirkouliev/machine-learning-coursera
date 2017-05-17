@@ -91,20 +91,27 @@ J = (J / m) + reg;
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
+% Create m x n matrix, where n are our labes, and m is our training Set
 Y = zeros(size(y,1), num_labels);
 
+% Fill the correct column, for each row, with the output from our training set
 for i=1:size(y,1)
     Y(i,y(i)) = 1;
 end
 
+% Calculate difference of training set and our hypothesis
 s_3 = a3 - Y;
+% Calculate gradies for secod layer
 s_2 = (s_3 * Theta2) .* sigmoidGradient([ones(size(z2, 1), 1) z2]);
+% Remove top row (bias node)
 s_2 = s_2(:,2:end);
 
+% Calculate gradient with respect to second layer weights
 delta2 = s_3' * a2;
+% Calculate gradient with respect to first layer weights
 delta1 = s_2' * a1;
 
-% compute grad with regularization (where we omit the first row of theta)
+% Re-calculate gradients with regularization (where we omit the first row of theta)
 Theta2_grad = (delta2 ./ m) + (lambda / m) * [zeros(1, size(Theta2, 2)); Theta2(2:end,:)];
 Theta1_grad = (delta1 ./ m) + (lambda / m) * [zeros(1, size(Theta1, 2)); Theta1(2:end,:)];
 
