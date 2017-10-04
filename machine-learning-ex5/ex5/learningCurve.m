@@ -54,55 +54,56 @@ error_val   = zeros(m, 1);
 % ---------------------- Sample Solution ----------------------
 
 
-% % Compute errors across number of training examples
-% for i = 1:m
-%     xTraining = X(1:i,:);
-%     yTraining = y(1:i,:);
-%     theta = trainLinearReg(xTraining, yTraining, lambda);
-%     error_train(i) = linearRegCostFunction(xTraining, yTraining, theta, 0);
-%     error_val(i) = linearRegCostFunction(Xval, yval, theta, 0);
-% end
+% Compute errors across `m` number of training/cross validation examples
+for i = 1:m
+    xTraining = X(1:i,:);
+    yTraining = y(1:i,:);
+    theta = trainLinearReg(xTraining, yTraining, lambda);
+    % Pulling out first param. returned, which is J
+    error_train(i) = linearRegCostFunction(xTraining, yTraining, theta, 0);
+    error_val(i) = linearRegCostFunction(Xval, yval, theta, 0);
+end
 
 
 % Averaged computation with random examples, done over 50 iterations (optional exercise)
 
-avg_error_train = zeros(m, 1);
-avg_error_val = zeros(m, 1);
-
-% Set number of iterations to do
-iterations = 50;
-
-for i = 1:iterations
-    % Get random elements from training set
-    randTrain = randperm(size(X, 1), size(X, 1));
-    randX = X(randTrain,:);
-    yTraining = y(randTrain,:);
-   
-    % Get random elements from validation set
-    randVal = randperm(size(Xval, 1), size(Xval, 1));
-    randXval = Xval(randVal,:);
-    randYval = yval(randVal,:);
-    
-    for j = 1:m
-        % Get random indices for training set up till i
-%         randTrain = randperm(size(X, 1), j);
-%         randX = X(randTrain,:);
-%         yTraining = y(randTrain,:);
-%         % Get random indices for cross validation set up till i
-%         randVal = randperm(size(Xval, 1), size(Xval, 1));
-%         randXval = Xval(randVal,:);
-%         randYval = yval(randVal,:);
-        
-   
-        theta = trainLinearReg(randX(1:j,:), yTraining(1:j,:), lambda);
-        avg_error_train(j) = avg_error_train(j) + linearRegCostFunction(randX, yTraining, theta, 0);
-        avg_error_val(j) = avg_error_val(j) + linearRegCostFunction(randXval, randYval, theta, 0);
-    end
-end
+% avg_error_train = zeros(m, 1);
+% avg_error_val = zeros(m, 1);
+% 
+% % Set number of iterations to do
+% iterations = 50;
+% 
+% for i = 1:iterations
+%     % Get random elements from training set
+%     randTrain = randperm(size(X, 1), size(X, 1));
+%     randX = X(randTrain,:);
+%     yTraining = y(randTrain,:);
+%    
+%     % Get random elements from validation set
+%     randVal = randperm(size(Xval, 1), size(Xval, 1));
+%     randXval = Xval(randVal,:);
+%     randYval = yval(randVal,:);
+%     
+%     for j = 1:m
+%         % Get random indices for training set up till i
+% %         randTrain = randperm(size(X, 1), j);
+% %         randX = X(randTrain,:);
+% %         yTraining = y(randTrain,:);
+% %         % Get random indices for cross validation set up till i
+% %         randVal = randperm(size(Xval, 1), size(Xval, 1));
+% %         randXval = Xval(randVal,:);
+% %         randYval = yval(randVal,:);
+%         
+%    
+%         theta = trainLinearReg(randX(1:j,:), yTraining(1:j,:), lambda);
+%         avg_error_train(j) = avg_error_train(j) + linearRegCostFunction(randX, yTraining, theta, 0);
+%         avg_error_val(j) = avg_error_val(j) + linearRegCostFunction(randXval, randYval, theta, 0);
+%     end
+% end
 
 % Set to averages
-error_train = avg_error_train ./ iterations;
-error_val= avg_error_val ./ iterations;
+% error_train = avg_error_train ./ iterations;
+% error_val= avg_error_val ./ iterations;
 
 % -------------------------------------------------------------
 

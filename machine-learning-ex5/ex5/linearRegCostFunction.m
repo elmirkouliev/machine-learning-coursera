@@ -13,8 +13,8 @@ J = 0;
 grad = zeros(size(theta));
 h = (X * theta) - y;
 % Computer regularization, omitting first theta
-regularization = sum(theta(2:end,:) .^ 2) * (lambda / (2*m));
-J = sum(h.^2) /(2 * m) + regularization;
+reg = sum(theta(2:end,:) .^ 2) * (lambda / (2*m));
+J = sum(h.^2) /(2 * m) + reg;
 
 
 % ====================== YOUR CODE HERE ======================
